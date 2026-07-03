@@ -132,8 +132,13 @@
 
   /* Form input helper for contact page */
   .input {
-    @apply w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-farm-leaf/40 focus:border-farm-leaf gentle-animation;
+    @apply w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground gentle-animation focus:outline-none;
   }
+  .input:focus {
+    border-color: var(--farm-leaf);
+    box-shadow: 0 0 0 3px rgba(63, 143, 79, 0.25);
+  }
+
 
   
   /* Simplified utility classes */
