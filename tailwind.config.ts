@@ -49,6 +49,13 @@ export default {
           emerald: "var(--accent-emerald)",
           purple: "var(--accent-purple)",
         },
+        farm: {
+          leaf: "var(--farm-leaf)",
+          "leaf-dark": "var(--farm-leaf-dark)",
+          earth: "var(--farm-earth)",
+          cream: "var(--farm-cream)",
+        },
+
         popover: {
           DEFAULT: "var(--popover)",
           foreground: "var(--popover-foreground)",

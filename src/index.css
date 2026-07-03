@@ -35,9 +35,16 @@
   --accent-blue: #2563eb;
   --accent-emerald: #059669;
   --accent-purple: #7c3aed;
+
+  /* Farm palette */
+  --farm-leaf: #3f8f4f;
+  --farm-leaf-dark: #2c6b39;
+  --farm-earth: #2a1f16;
+  --farm-cream: #f5efe1;
   
   --radius: 0.75rem;
 }
+
 
 .dark {
   --background: #0a0a0a;
@@ -122,6 +129,17 @@
   .font-bagel {
     font-family: 'Bagel Fat One', cursive;
   }
+
+  /* Form input helper for contact page */
+  .input {
+    @apply w-full rounded-lg border border-border bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground gentle-animation focus:outline-none;
+  }
+  .input:focus {
+    border-color: var(--farm-leaf);
+    box-shadow: 0 0 0 3px rgba(63, 143, 79, 0.25);
+  }
+
+
   
   /* Simplified utility classes */
   .clean-border {
