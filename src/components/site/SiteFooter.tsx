@@ -22,7 +22,7 @@ export function SiteFooter() {
             <a href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation">
               <Instagram className="w-4 h-4" />
             </a>
-            <a href="#" className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation">
+            <a href="https://www.facebook.com/growingthefuturesince1914" className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation">
               <Facebook className="w-4 h-4" />
             </a>
           </div>
