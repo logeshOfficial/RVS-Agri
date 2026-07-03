@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Leaf, Fish, TreePine, Sprout } from 'lucide-react'
-import heroVideo from '@/assets/paddy-field-hero.mp4.asset.json'
 
 const categories = ['All', 'Agriculture', 'Areca Nut', 'Horticulture', 'Forestry', 'Fisheries'] as const
 type Category = typeof categories[number]
@@ -89,8 +88,10 @@ export default function Home() {
           muted
           loop
           playsInline
-          src={heroVideo.url}
-        />
+        >
+          <source src="/paddy-field-hero.webm" type="video/webm" />
+          Your browser does not support the video tag.
+        </video>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
 
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 flex flex-col justify-end pb-24">
