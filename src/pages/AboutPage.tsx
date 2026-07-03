@@ -6,7 +6,7 @@ const timeline = [
   { year: '1958', title: 'Coconut & areca planted', text: 'The second generation expands to the slope, planting coconut and areca that still bear fruit today.' },
   { year: '1987', title: 'Orchards take root', text: 'Alphonso, Banganapalli and jackfruit orchards go in — a slow bet on fruit that pays back in decades.' },
   { year: '2004', title: 'Fisheries added', text: 'Three seasonal ponds are dug on the eastern low ground, stocked with local carp.' },
-  { year: '2019', title: 'Semmaram grove', text: 'A registered red-sandalwood belt is planted along the western boundary — a 25-year gift to the next family.' },
+  { year: '2019', title: 'RVS AGRI grove', text: 'A registered red-sandalwood belt is planted along the western boundary — a 25-year gift to the next family.' },
   { year: 'Today', title: 'Four generations', text: 'The fourth generation runs the farm with the same rhythm and a few new tools.' },
 ]
 
@@ -16,7 +16,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="Our story"
         title="Four generations, one valley."
-        subtitle="Semmaram is a family farm — worked, argued over and loved by the same family for a hundred years."
+        subtitle="RVS AGRI is a family farm — worked, argued over and loved by the same family for a hundred years."
         image="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1600&q=80"
       />
 

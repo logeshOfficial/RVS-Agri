@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Leaf, MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react'
+import { MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react'
 
 export function SiteFooter() {
   return (
@@ -7,15 +7,11 @@ export function SiteFooter() {
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
         <div className="md:col-span-2">
           <div className="flex items-center gap-2 mb-4">
-            <span className="w-10 h-10 rounded-full bg-farm-leaf flex items-center justify-center">
-              <Leaf className="w-5 h-5" strokeWidth={2.5} />
-            </span>
-            <div>
-              <div className="font-bagel text-2xl">Semmaram</div>
-              <div className="text-xs uppercase tracking-[0.2em] text-white/60">
-                Farm & Groves
-              </div>
-            </div>
+            <img
+              src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
+              alt="RVS AGRI Logo"
+              className="h-12 w-auto object-contain bg-white p-1 rounded-lg"
+            />
           </div>
           <p className="text-white/70 leading-relaxed max-w-md">
             A family farm rooted in generations of care for the land — growing paddy,
@@ -52,13 +48,13 @@ export function SiteFooter() {
           <ul className="space-y-3 text-sm text-white/70">
             <li className="flex gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> Kavery Valley, Tamil Nadu, India</li>
             <li className="flex gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0" /> +91 98765 43210</li>
-            <li className="flex gap-2"><Mail className="w-4 h-4 mt-0.5 shrink-0" /> hello@semmaram.farm</li>
+            <li className="flex gap-2"><Mail className="w-4 h-4 mt-0.5 shrink-0" /> hello@rvsagri.com</li>
           </ul>
         </div>
       </div>
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row justify-between items-center text-xs text-white/50 gap-2">
-          <span>© {new Date().getFullYear()} Semmaram Farm. Grown with care.</span>
+          <span>© {new Date().getFullYear()} RVS AGRI. Grown with care.</span>
           <span>Bulk & wholesale enquiries welcome.</span>
         </div>
       </div>

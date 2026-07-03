@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
-import { Menu, X, Leaf } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const links = [
@@ -47,31 +47,13 @@ export function Navbar() {
             : 'bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 py-2 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <span
-              className={`w-9 h-9 rounded-full flex items-center justify-center gentle-animation ${
-                solid ? 'bg-farm-leaf text-white' : 'bg-white/15 backdrop-blur text-white'
-              } group-hover:scale-105`}
-            >
-              <Leaf className="w-4 h-4" strokeWidth={2.5} />
-            </span>
-            <div className="flex flex-col leading-none">
-              <span
-                className={`font-bagel text-lg tracking-wide ${
-                  solid ? 'text-primary' : 'text-white'
-                }`}
-              >
-                Semmaram
-              </span>
-              <span
-                className={`text-[10px] uppercase tracking-[0.2em] ${
-                  solid ? 'text-muted-foreground' : 'text-white/70'
-                }`}
-              >
-                Farm & Groves
-              </span>
-            </div>
+            <img
+              src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
+              alt="RVS AGRI Logo"
+              className="h-16 sm:h-20 w-auto object-contain gentle-animation group-hover:scale-105"
+            />
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">

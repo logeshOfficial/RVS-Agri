@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Leaf, Fish, TreePine, Sprout } from 'lucide-react'
+import { ArrowRight, Leaf, Fish, TreePine, Sprout, Volume2, VolumeX } from 'lucide-react'
 
 const categories = ['All', 'Agriculture', 'Areca Nut', 'Horticulture', 'Forestry', 'Fisheries'] as const
 type Category = typeof categories[number]
@@ -45,7 +45,7 @@ const projects: Project[] = [
     blurb: 'Whole and processed jackfruit sold fresh through monsoon.',
   },
   {
-    title: 'Semmaram Timber',
+    title: 'RVS AGRI Timber',
     category: 'Forestry',
     image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80',
     blurb: 'Sustainably managed red sandalwood plantation, 25-year cycle.',
@@ -67,7 +67,7 @@ const projects: Project[] = [
 const quickLinks = [
   { icon: Sprout, title: 'Agriculture', desc: 'Paddy & Coconut', to: '/produce' },
   { icon: Leaf, title: 'Horticulture', desc: 'Mango & Jackfruit', to: '/produce' },
-  { icon: TreePine, title: 'Forestry', desc: 'Semmaram timber', to: '/produce' },
+  { icon: TreePine, title: 'Forestry', desc: 'RVS AGRI timber', to: '/produce' },
   { icon: Fish, title: 'Fisheries', desc: 'Freshwater ponds', to: '/fisheries' },
 ]
 
@@ -78,20 +78,84 @@ export default function Home() {
     [filter],
   )
 
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!audioRef.current) return
+      const scrollY = window.scrollY
+
+      if (scrollY > 50 || document.hidden) {
+        if (!audioRef.current.paused) {
+          audioRef.current.pause()
+        }
+      } else {
+        if (isAudioEnabled && audioRef.current.paused) {
+          audioRef.current.play().catch((err) => console.log('Audio play blocked:', err))
+        }
+      }
+    }
+
+    const handleVisibilityChange = () => {
+      if (!audioRef.current) return
+      const scrollY = window.scrollY
+
+      if (document.hidden || scrollY > 50) {
+        if (!audioRef.current.paused) {
+          audioRef.current.pause()
+        }
+      } else {
+        if (isAudioEnabled && audioRef.current.paused) {
+          audioRef.current.play().catch((err) => console.log('Audio play blocked:', err))
+        }
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+  }, [isAudioEnabled])
+
+  const toggleAudio = () => {
+    if (!audioRef.current || !videoRef.current) return
+
+    if (isAudioEnabled) {
+      audioRef.current.pause()
+      setIsAudioEnabled(false)
+    } else {
+      videoRef.current.currentTime = 0
+      videoRef.current.play()
+      
+      audioRef.current.currentTime = 0
+      audioRef.current.play().then(() => {
+        setIsAudioEnabled(true)
+      }).catch((err) => {
+        console.log('Audio play failed:', err)
+      })
+    }
+  }
+
   return (
     <>
       {/* HERO */}
       <section className="relative h-screen w-full overflow-hidden">
         <video
+          ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
           muted
           loop
           playsInline
         >
-          <source src="/paddy-field-hero.webm" type="video/webm" />
+          <source src={`${import.meta.env.BASE_URL}paddy-field-hero.mp4`} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
+        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}hero-audio.mp3`} loop />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
 
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 flex flex-col justify-end pb-24">
@@ -118,7 +182,7 @@ export default function Home() {
             transition={{ delay: 0.9 }}
             className="text-white/85 text-lg sm:text-xl max-w-xl mt-6"
           >
-            Semmaram Farm cultivates paddy, coconut, areca nut, orchard fruit and heritage
+            RVS AGRI cultivates paddy, coconut, areca nut, orchard fruit and heritage
             timber across the Kavery valley — the way our family has for a hundred years.
           </motion.p>
           <motion.div
@@ -140,6 +204,22 @@ export default function Home() {
               Bulk enquiries
             </Link>
           </motion.div>
+        </div>
+
+        {/* Speaker Toggle Button */}
+        <div className="absolute bottom-24 right-6 sm:right-12 z-30">
+          <button
+            onClick={toggleAudio}
+            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/15 backdrop-blur-md hover:bg-white/25 text-white border border-white/30 transition-all duration-300 shadow-lg hover:scale-105"
+            aria-label={isAudioEnabled ? 'Mute cinematic audio' : 'Play cinematic audio'}
+            title={isAudioEnabled ? 'Mute cinematic audio' : 'Play cinematic audio'}
+          >
+            {isAudioEnabled ? (
+              <Volume2 className="w-5 h-5 animate-pulse" />
+            ) : (
+              <VolumeX className="w-5 h-5 text-white/85" />
+            )}
+          </button>
         </div>
       </section>
 
@@ -182,7 +262,7 @@ export default function Home() {
             A hundred acres between the river and the hills.
           </h2>
           <p className="text-muted-foreground mt-6 text-lg leading-relaxed">
-            Semmaram sits in a slow bend of the Kavery — deep alluvial soil in the low
+            RVS AGRI sits in a slow bend of the Kavery — deep alluvial soil in the low
             fields, red laterite up the slopes. We rotate paddy with pulses, keep our
             coconut groves under cover crop, and let the forest belt run wild along the
             western edge.

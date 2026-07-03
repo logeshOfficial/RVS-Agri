@@ -58,7 +58,7 @@ export default function ContactPage() {
               <li className="flex gap-3">
                 <MapPin className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
                 <div>
-                  <div className="font-semibold">Semmaram Farm</div>
+                  <div className="font-semibold">RVS AGRI</div>
                   <div className="text-muted-foreground">Kavery Valley, near Erode, Tamil Nadu 638001, India</div>
                 </div>
               </li>
@@ -68,7 +68,7 @@ export default function ContactPage() {
               </li>
               <li className="flex gap-3">
                 <Mail className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
-                <a href="mailto:hello@semmaram.farm" className="hover:text-farm-leaf-dark gentle-animation">hello@semmaram.farm</a>
+                <a href="mailto:hello@rvsagri.com" className="hover:text-farm-leaf-dark gentle-animation">hello@rvsagri.com</a>
               </li>
               <li className="flex gap-3">
                 <Clock className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />

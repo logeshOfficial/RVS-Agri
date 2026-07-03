@@ -50,7 +50,7 @@ const sections: Section[] = [
   {
     id: 'forestry',
     eyebrow: 'Forestry',
-    title: 'Semmaram (Red Sandalwood)',
+    title: 'Red Sandalwood (Semmaram)',
     copy: 'A quiet, long-horizon crop. Our red sandalwood belt is legally registered and harvested on a 25-year cycle with full traceability.',
     bullets: [
       'Government-permitted plantation, fully documented',
