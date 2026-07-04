@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/site/Navbar'
 import { SiteFooter } from './components/site/SiteFooter'
+import { ScrollToTop } from './components/site/ScrollToTop'
 import Home from './pages/Home'
 import Produce from './pages/Produce'
 import Fisheries from './pages/Fisheries'
@@ -12,6 +13,7 @@ import NotFound from './pages/NotFound'
 export default function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <ScrollToTop />
       <div className="min-h-screen bg-background text-foreground flex flex-col">
         <Navbar />
         <main className="flex-1">
