@@ -33,7 +33,7 @@ const sections: Section[] = [
       'Traditional boiled (kalipak) variant on request',
       'Consistent monthly supply to trader networks',
     ],
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=1400&q=80',
+    image: `${import.meta.env.BASE_URL}pakku.jpg`,
   },
   {
     id: 'horticulture',

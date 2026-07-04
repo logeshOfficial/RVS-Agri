@@ -68,7 +68,7 @@ export default function ContactPage() {
               </li>
               <li className="flex gap-3">
                 <Mail className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
-                <a href="mailto:hello@rvsagri.com" className="hover:text-farm-leaf-dark gentle-animation">hello@rvsagri.com</a>
+                <a href="mailto:info@rvsagri.com" className="hover:text-farm-leaf-dark gentle-animation">info@rvsagri.com</a>
               </li>
               <li className="flex gap-3">
                 <Clock className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />

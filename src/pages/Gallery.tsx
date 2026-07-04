@@ -15,7 +15,7 @@ const photos: Photo[] = [
   { src: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?w=800&q=80', category: 'Water', caption: 'The eastern pond after rain' },
   { src: 'https://images.unsplash.com/photo-1621334269025-ae4d8f7ba0d5?w=800&q=80', category: 'Trees & Growth', caption: 'Young jackfruit forming' },
   { src: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=800&q=80', category: 'Trees & Growth', caption: 'The RVS AGRI grove' },
-  { src: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=800&q=80', category: 'Harvest', caption: 'Areca drying on the platform', span: 'md:col-span-2' },
+  { src: `${import.meta.env.BASE_URL}pakku.jpg`, category: 'Harvest', caption: 'Areca drying on the platform', span: 'md:col-span-2' },
   { src: 'https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?w=800&q=80', category: 'Trees & Growth', caption: 'Century-old coconut palms' },
   { src: 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=800&q=80', category: 'Water', caption: 'Rohu harvest morning' },
   { src: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800&q=80', category: 'Trees & Growth', caption: 'Nendran banana between rows' },

@@ -29,7 +29,7 @@ const projects: Project[] = [
   {
     title: 'Paakumaram Areca',
     category: 'Areca Nut',
-    image: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=1200&q=80',
+    image: `${import.meta.env.BASE_URL}pakku.jpg`,
     blurb: 'Premium sun-dried areca nut sorted by grade for wholesalers.',
   },
   {
