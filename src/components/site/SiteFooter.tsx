@@ -46,8 +46,8 @@ export function SiteFooter() {
             Reach Us
           </h4>
           <ul className="space-y-3 text-sm text-white/70">
-            <li className="flex gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> Kavery Valley, Tamil Nadu, India</li>
-            <li className="flex gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0" /> +91 98765 43210</li>
+            <li className="flex gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> Vepankullam, Pattukkottai, Tamil Nadu 614906, India</li>
+            <li className="flex gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0" /> +91 99440 27277</li>
             <li className="flex gap-2"><Mail className="w-4 h-4 mt-0.5 shrink-0" /> hello@rvsagri.com</li>
           </ul>
         </div>

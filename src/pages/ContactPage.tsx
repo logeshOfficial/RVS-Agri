@@ -59,12 +59,12 @@ export default function ContactPage() {
                 <MapPin className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
                 <div>
                   <div className="font-semibold">RVS AGRI</div>
-                  <div className="text-muted-foreground">Kavery Valley, near Erode, Tamil Nadu 638001, India</div>
+                  <div className="text-muted-foreground">Vepankullam, Pattukkottai, Tamil Nadu 614906, India</div>
                 </div>
               </li>
               <li className="flex gap-3">
                 <Phone className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
-                <a href="tel:+919876543210" className="hover:text-farm-leaf-dark gentle-animation">+91 98765 43210</a>
+                <a href="tel:+919876543210" className="hover:text-farm-leaf-dark gentle-animation">+91 99440 27277</a>
               </li>
               <li className="flex gap-3">
                 <Mail className="w-4 h-4 mt-1 text-farm-leaf-dark shrink-0" />
@@ -80,7 +80,7 @@ export default function ContactPage() {
           <div className="rounded-2xl overflow-hidden border border-border aspect-[4/3]">
             <iframe
               title="Farm location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=77.65%2C11.30%2C77.80%2C11.40&layer=mapnik&marker=11.35%2C77.72"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=79.29632%2C10.40728%2C79.44632%2C10.50728&layer=mapnik&marker=10.45728%2C79.36632"
               className="w-full h-full"
               loading="lazy"
             />
