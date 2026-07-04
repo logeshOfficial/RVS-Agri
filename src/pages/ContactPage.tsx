@@ -80,7 +80,7 @@ export default function ContactPage() {
           <div className="rounded-2xl overflow-hidden border border-border aspect-[4/3]">
             <iframe
               title="Farm location"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=79.29632%2C10.40728%2C79.44632%2C10.50728&layer=mapnik&marker=10.45728%2C79.36632"
+              src="https://maps.google.com/maps?q=10.4572800,79.3663200&z=15&output=embed"
               className="w-full h-full"
               loading="lazy"
             />
