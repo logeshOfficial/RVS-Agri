@@ -45,8 +45,8 @@ export default function ContactPage() {
         eyebrow="Get in touch"
         title="Come visit. Or send a note."
         subtitle="Bulk buyers, restaurants, co-ops and curious neighbours — we'd love to hear from you."
-        image="https://images.unsplash.com/photo-1500595046743-cd271d694d30?w=1600&q=80"
-        height="h-[50vh] min-h-[360px]"
+        image="https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=1600&q=80"
+        height="h-[55vh] min-h-[400px]"
       />
 
       <section className="max-w-7xl mx-auto px-6 py-16 grid lg:grid-cols-5 gap-10">

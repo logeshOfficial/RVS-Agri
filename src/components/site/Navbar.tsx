@@ -116,8 +116,14 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* Right — speaker (home only) + Enquire + mobile menu */}
+          {/* Right — Enquire + speaker (home only) + mobile menu */}
           <div className="flex items-center gap-2">
+            <Link
+              to="/contact"
+              className="hidden sm:inline-flex bg-farm-leaf hover:bg-farm-leaf-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full gentle-animation hover:scale-[1.03] shadow-sm"
+            >
+              Enquire
+            </Link>
             {isHome && (
               <button
                 onClick={toggleAudio}
@@ -133,12 +139,6 @@ export function Navbar() {
                   : <VolumeX className="w-4 h-4" />}
               </button>
             )}
-            <Link
-              to="/contact"
-              className="hidden sm:inline-flex bg-farm-leaf hover:bg-farm-leaf-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full gentle-animation hover:scale-[1.03] shadow-sm"
-            >
-              Enquire
-            </Link>
             <button
               aria-label="Toggle menu"
               onClick={() => setOpen(!open)}

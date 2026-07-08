@@ -4,18 +4,18 @@ import { MapPin, Phone, Mail, Instagram, Facebook } from 'lucide-react'
 export function SiteFooter() {
   return (
     <footer className="bg-farm-earth text-white/90 mt-24">
-      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
-        {/* Brand */}
-        <div className="lg:col-span-1">
-          <div className="flex items-center gap-2 mb-4">
+        {/* Brand — spans 2 cols on large screens */}
+        <div className="sm:col-span-2 lg:col-span-2">
+          <div className="mb-5">
             <img
               src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
               alt="RVS AGRI Logo"
               className="h-20 w-auto object-contain bg-white p-1.5 rounded-xl"
             />
           </div>
-          <p className="text-white/70 leading-relaxed text-sm">
+          <p className="text-white/70 leading-relaxed text-sm max-w-sm">
             A family farm rooted in generations of care for the land — growing paddy,
             coconut, areca nut, mango, jackfruit and heritage timber the way our
             grandparents taught us.
@@ -24,16 +24,16 @@ export function SiteFooter() {
             <a
               href="https://www.instagram.com/rvs_agri/"
               target="_blank" rel="noopener noreferrer"
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation"
               aria-label="Instagram"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation"
             >
               <Instagram className="w-4 h-4" />
             </a>
             <a
               href="https://www.facebook.com/growingthefuturesince1914"
               target="_blank" rel="noopener noreferrer"
-              className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation"
               aria-label="Facebook"
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 gentle-animation"
             >
               <Facebook className="w-4 h-4" />
             </a>
@@ -41,7 +41,7 @@ export function SiteFooter() {
         </div>
 
         {/* Explore */}
-        <div className="lg:col-span-1">
+        <div>
           <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">
             Explore
           </h4>
@@ -52,8 +52,11 @@ export function SiteFooter() {
             <li><Link to="/gallery"   className="hover:text-white gentle-animation">Gallery</Link></li>
             <li><Link to="/contact"   className="hover:text-white gentle-animation">Contact</Link></li>
           </ul>
+        </div>
 
-          <h4 className="font-semibold text-white mt-8 mb-4 text-sm uppercase tracking-widest">
+        {/* Reach Us */}
+        <div>
+          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">
             Reach Us
           </h4>
           <ul className="space-y-3 text-sm text-white/70">
@@ -72,22 +75,6 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* Google Map */}
-        <div className="md:col-span-2 lg:col-span-2">
-          <h4 className="font-semibold text-white mb-4 text-sm uppercase tracking-widest">
-            Find Us
-          </h4>
-          <div className="rounded-2xl overflow-hidden w-full aspect-[16/9] border border-white/10">
-            <iframe
-              title="RVS AGRI farm location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919!2d79.3663200!3d10.4572800!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baaab137a43f0fb%3A0xf0d6b50369ad8a89!2sRVS%20AGRI%E2%84%A2!5e0!3m2!1sen!2sin!4v1"
-              className="w-full h-full"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        </div>
       </div>
 
       {/* Bottom bar */}
