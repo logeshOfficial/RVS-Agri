@@ -12,7 +12,7 @@ import NotFound from './pages/NotFound'
 
 /** WhatsApp phone number — update this if the number changes */
 const WHATSAPP_NUMBER = '919944027277'
-const WHATSAPP_MESSAGE = encodeURIComponent('Hi RVS AGRI, I would like to enquire about your produce.')
+const WHATSAPP_MESSAGE = encodeURIComponent('Hi RVS AGRI! I would like to enquire about your farm produce. Please share more details.')
 
 export default function App() {
   return (
@@ -34,13 +34,13 @@ export default function App() {
         <SiteFooter />
       </div>
 
-      {/* ── Global WhatsApp floating button — bottom-left ── */}
+      {/* ── Global WhatsApp floating button — bottom-right ── */}
       <a
         href={`https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Chat on WhatsApp"
-        className="fixed bottom-6 left-6 z-[200] flex items-center justify-center
+        className="fixed bottom-6 right-6 z-[200] flex items-center justify-center
                    w-14 h-14 rounded-full shadow-lg
                    bg-[#25D366] hover:bg-[#20c05c]
                    transition-all duration-300 hover:scale-110 active:scale-95"
