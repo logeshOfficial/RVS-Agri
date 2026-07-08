@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Volume2, VolumeX } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const links = [
@@ -18,6 +18,36 @@ export function Navbar() {
   const location = useLocation()
   const isHome = location.pathname === '/'
 
+  // ── Audio (hero video soundtrack) ────────────────────────────────────────
+  const audioRef = useRef<HTMLAudioElement | null>(null)
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false)
+
+  useEffect(() => {
+    // Attach to the audio element rendered inside Home's hero
+    const el = document.querySelector<HTMLAudioElement>('#hero-audio')
+    if (el) audioRef.current = el
+  }, [location.pathname])
+
+  const toggleAudio = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    if (isAudioEnabled) {
+      audio.pause()
+      setIsAudioEnabled(false)
+    } else {
+      audio.currentTime = 0
+      audio.play().then(() => setIsAudioEnabled(true)).catch(() => {})
+    }
+  }
+
+  // Pause audio when navigating away from home
+  useEffect(() => {
+    if (!isHome && audioRef.current) {
+      audioRef.current.pause()
+      setIsAudioEnabled(false)
+    }
+  }, [isHome])
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     onScroll()
@@ -30,10 +60,15 @@ export function Navbar() {
   }, [location.pathname])
 
   const solid = scrolled || !isHome
+  // On non-home pages the navbar is always fully opaque — hero images bleed through blur
+  const fullyOpaque = !isHome
+
   const linkBase = 'text-sm font-medium tracking-wide gentle-animation'
-  const linkColor = solid
-    ? 'text-foreground/70 hover:text-primary'
-    : 'text-white/85 hover:text-white'
+  const linkColor = solid && !fullyOpaque && !scrolled
+    ? 'text-white/85 hover:text-white'
+    : solid
+      ? 'text-foreground/80 hover:text-farm-leaf-dark'
+      : 'text-white/85 hover:text-white'
 
   return (
     <>
@@ -42,20 +77,24 @@ export function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
-          solid
-            ? 'bg-background/85 backdrop-blur-xl border-b border-border/60'
-            : 'bg-transparent'
+          fullyOpaque
+            ? 'bg-background border-b border-border/60'
+            : solid
+              ? 'bg-background/85 backdrop-blur-xl border-b border-border/60'
+              : 'bg-transparent'
         }`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-2 flex items-center justify-between">
+          {/* Left — logo */}
           <Link to="/" className="flex items-center gap-2 group">
             <img
               src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
               alt="RVS AGRI Logo"
-              className="h-16 sm:h-20 w-auto object-contain gentle-animation group-hover:scale-105"
+              className="h-20 sm:h-24 w-auto object-contain gentle-animation group-hover:scale-105"
             />
           </Link>
 
+          {/* Centre — nav links */}
           <div className="hidden lg:flex items-center gap-8">
             {links.map((l) => (
               <NavLink
@@ -66,7 +105,7 @@ export function Navbar() {
                   `${linkBase} ${linkColor} ${
                     isActive
                       ? solid
-                        ? '!text-farm-leaf'
+                        ? '!text-farm-leaf font-semibold'
                         : '!text-white font-semibold'
                       : ''
                   }`
@@ -77,7 +116,23 @@ export function Navbar() {
             ))}
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* Right — speaker (home only) + Enquire + mobile menu */}
+          <div className="flex items-center gap-2">
+            {isHome && (
+              <button
+                onClick={toggleAudio}
+                aria-label={isAudioEnabled ? 'Mute audio' : 'Play audio'}
+                className={`flex items-center justify-center w-9 h-9 rounded-full gentle-animation
+                  ${solid
+                    ? 'text-foreground/70 hover:text-farm-leaf-dark hover:bg-muted border border-border'
+                    : 'text-white/85 hover:text-white bg-white/10 backdrop-blur hover:bg-white/20 border border-white/20'
+                  }`}
+              >
+                {isAudioEnabled
+                  ? <Volume2 className="w-4 h-4 animate-pulse" />
+                  : <VolumeX className="w-4 h-4" />}
+              </button>
+            )}
             <Link
               to="/contact"
               className="hidden sm:inline-flex bg-farm-leaf hover:bg-farm-leaf-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full gentle-animation hover:scale-[1.03] shadow-sm"

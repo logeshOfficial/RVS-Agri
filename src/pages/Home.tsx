@@ -1,68 +1,18 @@
 import { useMemo, useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowRight, Leaf, Fish, TreePine, Sprout, Volume2, VolumeX } from 'lucide-react'
+import { ArrowRight, Leaf, Fish, TreePine, Sprout } from 'lucide-react'
+import { homePortfolio, type PortfolioCategory } from '@/config/site-content.config'
 
 const categories = ['All', 'Agriculture', 'Areca Nut', 'Horticulture', 'Forestry', 'Fisheries'] as const
 type Category = typeof categories[number]
 
-interface Project {
-  title: string
-  category: Exclude<Category, 'All'>
-  image: string
-  blurb: string
+/** Resolve a portfolio card image to a full URL */
+function cardImageUrl(folder: string, filename: string): string {
+  if (!filename) return ''
+  if (filename.startsWith('http')) return filename
+  return `${import.meta.env.BASE_URL}home/${folder}/${filename}`
 }
-
-const projects: Project[] = [
-  {
-    title: 'Ponni Paddy Fields',
-    category: 'Agriculture',
-    image: 'https://images.unsplash.com/photo-1595339589414-e42fadffde48?w=1200&q=80',
-    blurb: 'Two seasonal harvests of aromatic Ponni rice across 40 acres.',
-  },
-  {
-    title: 'Coconut Groves',
-    category: 'Agriculture',
-    image: 'https://images.unsplash.com/photo-1502472584811-0a2f2feb8968?w=1200&q=80',
-    blurb: 'Tall variety coconuts hand-picked from century-old trees.',
-  },
-  {
-    title: 'Paakumaram Areca',
-    category: 'Areca Nut',
-    image: `${import.meta.env.BASE_URL}pakku.jpg`,
-    blurb: 'Premium sun-dried areca nut sorted by grade for wholesalers.',
-  },
-  {
-    title: 'Alphonso Mangoes',
-    category: 'Horticulture',
-    image: 'https://images.unsplash.com/photo-1591073113125-e46713c829ed?w=1200&q=80',
-    blurb: 'Small-batch heritage mango cultivars from our 200-tree grove.',
-  },
-  {
-    title: 'Jackfruit Orchard',
-    category: 'Horticulture',
-    image: 'https://images.unsplash.com/photo-1621334269025-ae4d8f7ba0d5?w=1200&q=80',
-    blurb: 'Whole and processed jackfruit sold fresh through monsoon.',
-  },
-  {
-    title: 'RVS AGRI Timber',
-    category: 'Forestry',
-    image: 'https://images.unsplash.com/photo-1502082553048-f009c37129b9?w=1200&q=80',
-    blurb: 'Sustainably managed red sandalwood plantation, 25-year cycle.',
-  },
-  {
-    title: 'Rohu & Catla Ponds',
-    category: 'Fisheries',
-    image: 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?w=1200&q=80',
-    blurb: 'Three freshwater ponds stocked with local carp species.',
-  },
-  {
-    title: 'Banana Intercrop',
-    category: 'Horticulture',
-    image: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=1200&q=80',
-    blurb: 'Nendran banana grown between coconut rows year-round.',
-  },
-]
 
 const quickLinks = [
   { icon: Sprout, title: 'Agriculture', desc: 'Paddy & Coconut', to: '/produce' },
@@ -73,10 +23,12 @@ const quickLinks = [
 
 export default function Home() {
   const [filter, setFilter] = useState<Category>('All')
-  const filtered = useMemo(
-    () => (filter === 'All' ? projects : projects.filter((p) => p.category === filter)),
-    [filter],
-  )
+  const filtered = useMemo(() => {
+    const cards = homePortfolio.filter((p) => p.image !== '') // skip cards with no image yet
+    return filter === 'All'
+      ? cards
+      : cards.filter((p) => p.category === (filter as PortfolioCategory))
+  }, [filter])
 
   const videoRef = useRef<HTMLVideoElement>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -155,7 +107,7 @@ export default function Home() {
           <source src={`${import.meta.env.BASE_URL}paddy-field-hero.mp4`} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <audio ref={audioRef} src={`${import.meta.env.BASE_URL}hero-audio.mp3`} loop />
+        <audio id="hero-audio" ref={audioRef} src={`${import.meta.env.BASE_URL}hero-audio.mp3`} loop />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/70" />
 
         <div className="relative z-10 h-full max-w-7xl mx-auto px-6 flex flex-col justify-end pb-24">
@@ -206,21 +158,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Speaker Toggle Button */}
-        <div className="absolute bottom-24 right-6 sm:right-12 z-30">
-          <button
-            onClick={toggleAudio}
-            className="flex items-center justify-center w-12 h-12 rounded-full bg-white/15 backdrop-blur-md hover:bg-white/25 text-white border border-white/30 transition-all duration-300 shadow-lg hover:scale-105"
-            aria-label={isAudioEnabled ? 'Mute cinematic audio' : 'Play cinematic audio'}
-            title={isAudioEnabled ? 'Mute cinematic audio' : 'Play cinematic audio'}
-          >
-            {isAudioEnabled ? (
-              <Volume2 className="w-5 h-5 animate-pulse" />
-            ) : (
-              <VolumeX className="w-5 h-5 text-white/85" />
-            )}
-          </button>
-        </div>
       </section>
 
       {/* QUICK LINKS */}
@@ -323,22 +260,30 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="group bg-background rounded-2xl overflow-hidden border border-border hover:shadow-xl gentle-animation"
+                className="group bg-background rounded-2xl overflow-hidden border border-border hover:shadow-xl gentle-animation flex flex-col"
               >
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
-                    src={p.image}
+                    src={cardImageUrl(p.folder, p.image)}
                     alt={p.title}
                     className="w-full h-full object-cover group-hover:scale-105 gentle-animation"
                     loading="lazy"
                   />
                 </div>
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-farm-leaf-dark font-semibold">
                     {p.category}
                   </span>
                   <h3 className="font-bagel text-2xl mt-1">{p.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-2">{p.blurb}</p>
+                  <p className="text-sm text-muted-foreground mt-2 flex-1">{p.blurb}</p>
+                  <Link
+                    to={p.link}
+                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-farm-leaf-dark
+                               hover:gap-2.5 gentle-animation group/btn"
+                  >
+                    See more
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5" />
+                  </Link>
                 </div>
               </motion.article>
             ))}

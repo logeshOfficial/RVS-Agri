@@ -79,10 +79,12 @@ export default function ContactPage() {
 
           <div className="rounded-2xl overflow-hidden border border-border aspect-[4/3]">
             <iframe
-              title="Farm location"
-              src="https://maps.google.com/maps?q=10.4572800,79.3663200&z=15&output=embed"
+              title="RVS AGRI farm location"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919!2d79.3663200!3d10.4572800!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baaab137a43f0fb%3A0xf0d6b50369ad8a89!2sRVS%20AGRI%E2%84%A2!5e0!3m2!1sen!2sin!4v1"
               className="w-full h-full"
               loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
             />
           </div>
         </aside>

@@ -1,0 +1,178 @@
+/**
+ * ProduceSlideshow
+ *
+ * Universal auto-cycling image slideshow used by every produce section.
+ * Images and timing are driven entirely by site-content.config.ts —
+ * no changes needed here when updating content.
+ */
+
+import { useState, useEffect, useCallback, useRef } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
+import type { ProduceSection } from '@/config/site-content.config'
+
+interface Props {
+  section: ProduceSection
+}
+
+/** Resolve a filename inside a public subfolder to a full URL */
+function publicUrl(folder: string, filename: string): string {
+  if (filename.startsWith('http')) return filename
+  const clean = filename.replace(/^\/+/, '')
+  return `${import.meta.env.BASE_URL}${folder}/${clean}`
+}
+
+const fadeVariants = {
+  enter:  { opacity: 0, scale: 1.04 },
+  center: { opacity: 1, scale: 1,   transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+  exit:   { opacity: 0, scale: 0.97, transition: { duration: 0.5, ease: 'easeIn' } },
+}
+
+export function ProduceSlideshow({ section }: Props) {
+  const { images, folder, title } = section
+  const interval = section.slideshowIntervalMs ?? 2000
+  const hasImages = images.length > 0
+
+  const [current, setCurrent] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % images.length)
+  }, [images.length])
+
+  const prev = useCallback(() => {
+    setCurrent((prev) => (prev - 1 + images.length) % images.length)
+  }, [images.length])
+
+  const goTo = useCallback((i: number) => setCurrent(i), [])
+
+  useEffect(() => {
+    if (!hasImages || paused || images.length <= 1) return
+    intervalRef.current = setInterval(next, interval)
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current) }
+  }, [next, paused, current, hasImages, images.length, interval])
+
+  // ── Single empty state (no config images yet) ───────────────────────────
+  if (!hasImages) {
+    return (
+      <div className="relative rounded-3xl overflow-hidden aspect-[4/3] w-full
+                      bg-farm-cream/40 border-2 border-dashed border-farm-leaf/30
+                      flex flex-col items-center justify-center gap-3 text-center px-6">
+        <div className="w-14 h-14 rounded-full bg-farm-leaf/10 flex items-center justify-center">
+          <svg className="w-7 h-7 text-farm-leaf/50" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3 21h18M3.75 3h16.5M3.75 3A.75.75 0 003 3.75v13.5c0 .414.336.75.75.75H20.25a.75.75 0 00.75-.75V3.75A.75.75 0 0020.25 3H3.75z" />
+          </svg>
+        </div>
+        <p className="text-sm text-muted-foreground font-medium">Photos coming soon</p>
+        <p className="text-xs text-muted-foreground/70">
+          Drop images into <code className="bg-farm-leaf/10 px-1 rounded">public/{folder}/</code> and add them to the config
+        </p>
+      </div>
+    )
+  }
+
+  const currentSrc = publicUrl(folder, images[current].src)
+  const showDots   = images.length > 1
+
+  return (
+    <div
+      className="relative rounded-3xl overflow-hidden aspect-[4/3] w-full group select-none bg-farm-cream/30"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {/* ── Crossfade image stack ── */}
+      <AnimatePresence mode="sync">
+        <motion.img
+          key={current}
+          src={currentSrc}
+          alt={images[current].alt}
+          variants={fadeVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="absolute inset-0 w-full h-full object-cover object-center"
+          draggable={false}
+        />
+      </AnimatePresence>
+
+      {/* ── Gradient for controls readability ── */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+
+      {/* ── Prev / Next (only shown when >1 image) ── */}
+      {showDots && (
+        <>
+          <button
+            onClick={prev}
+            aria-label="Previous image"
+            className="absolute left-3 top-1/2 -translate-y-1/2 z-20
+                       w-9 h-9 rounded-full bg-black/30 backdrop-blur-md text-white border border-white/20
+                       flex items-center justify-center
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                       hover:bg-black/50 hover:scale-110 active:scale-95"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+          <button
+            onClick={next}
+            aria-label="Next image"
+            className="absolute right-3 top-1/2 -translate-y-1/2 z-20
+                       w-9 h-9 rounded-full bg-black/30 backdrop-blur-md text-white border border-white/20
+                       flex items-center justify-center
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                       hover:bg-black/50 hover:scale-110 active:scale-95"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        </>
+      )}
+
+      {/* ── Dots + pause ── */}
+      {showDots && (
+        <div className="absolute bottom-4 left-0 right-0 z-20 flex items-center justify-center gap-3">
+          <button
+            onClick={() => setPaused((p) => !p)}
+            aria-label={paused ? 'Resume slideshow' : 'Pause slideshow'}
+            className="w-7 h-7 rounded-full bg-black/30 backdrop-blur-md text-white border border-white/20
+                       flex items-center justify-center
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                       hover:bg-black/50"
+          >
+            {paused
+              ? <Play  className="w-3 h-3 fill-white" />
+              : <Pause className="w-3 h-3 fill-white" />}
+          </button>
+
+          <div className="flex gap-1.5">
+            {images.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Go to image ${i + 1}`}
+                className={[
+                  'rounded-full transition-all duration-300',
+                  i === current
+                    ? 'bg-white w-5 h-2'
+                    : 'bg-white/50 hover:bg-white/80 w-2 h-2',
+                ].join(' ')}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Progress bar ── */}
+      {!paused && showDots && (
+        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-white/20 z-20 overflow-hidden">
+          <motion.div
+            key={current}
+            className="h-full bg-farm-leaf"
+            initial={{ scaleX: 0, originX: 0 }}
+            animate={{ scaleX: 1, originX: 0 }}
+            transition={{ duration: interval / 1000, ease: 'linear' }}
+          />
+        </div>
+      )}
+    </div>
+  )
+}
