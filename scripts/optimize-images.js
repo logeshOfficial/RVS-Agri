@@ -156,6 +156,7 @@ async function main() {
       const tmpPath = srcPath + '.tmp'
       const sharpInstance = sharp(srcPath)
         .rotate() // Auto-rotate based on EXIF orientation, then remove the EXIF tag
+        .withMetadata({ orientation: 1 }) // Force orientation tag to normal after rotation
 
       if (ext === '.png') {
         await sharpInstance
@@ -170,18 +171,18 @@ async function main() {
 
       const tmpStat = await stat(tmpPath)
 
-      // Only overwrite if the re-compressed version is actually smaller
-      if (tmpStat.size < originalSize) {
+      // ALWAYS apply rotation fix to ensure EXIF orientation is baked in
+      // Only skip if file sizes are very similar (within 2%)
+      const sizeDiff = Math.abs(originalSize - tmpStat.size) / originalSize
+      if (tmpStat.size < originalSize || sizeDiff < 0.02) {
         await rename(tmpPath, srcPath)
         totalSavedOriginal += originalSize - tmpStat.size
         if (isVerbose)
           console.log(`  orig  ${relPath}  ${fmtSaving(originalSize, tmpStat.size)}`)
       } else {
-        // Re-compression made it larger — discard the tmp, keep original
-        await rename(tmpPath, tmpPath.replace('.tmp', ''))  // restore
-        // Actually just remove the tmp
+        // Re-compression made it significantly larger — discard the tmp, keep original
         const { unlink } = await import('node:fs/promises')
-        await unlink(srcPath + '.tmp').catch(() => {})
+        await unlink(tmpPath).catch(() => {})
         if (isVerbose)
           console.log(c.grey(`  orig  ${relPath}  already optimal, keeping original`))
       }
@@ -189,6 +190,7 @@ async function main() {
       // ── 2. Generate .webp sibling ─────────────────────────────────────────
       await sharp(srcPath)
         .rotate() // Also apply auto-rotation to WebP
+        .withMetadata({ orientation: 1 }) // Ensure WebP also has correct orientation
         .webp({ quality: CONFIG.webpQuality, effort: 6 })
         .toFile(webpPath)
 
