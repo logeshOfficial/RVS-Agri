@@ -103,6 +103,7 @@ export function PaakumaramSlideshow() {
             alt={images[current].alt}
             className="w-full h-full object-cover"
             draggable={false}
+            loading="lazy"
           />
         </motion.picture>
       </AnimatePresence>

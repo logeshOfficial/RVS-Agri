@@ -110,6 +110,7 @@ export function ProduceSlideshow({ section }: Props) {
             alt={images[current].alt}
             className="w-full h-full object-cover object-center"
             draggable={false}
+            loading="lazy"
           />
         </motion.picture>
       </AnimatePresence>
