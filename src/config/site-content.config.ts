@@ -87,7 +87,6 @@ export const paddySection: ProduceSection = {
     { src: 'IMG_8396.jpeg', alt: 'first stage completed paddy and cutting' },
     { src: 'IMG_8426.jpeg', alt: 'first stage completed paddy' },    
     { src: 'IMG_2945.jpeg', alt: 'Wide shot before well growing paddy' },
-    { src: 'IMG_3004.jpeg', alt: 'Wide shot before well growing paddy' },
     { src: 'IMG_3441.jpeg', alt: 'Well grown paddy' },
    
 

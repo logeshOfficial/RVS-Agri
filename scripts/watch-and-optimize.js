@@ -84,6 +84,7 @@ async function optimizeImage(filePath, sharp) {
     // ── 1. Re-compress original in place ─────────────────────────────────────
     const tmpPath = filePath + '.tmp'
     const sharpInstance = sharp(filePath)
+      .rotate() // Auto-rotate based on EXIF orientation
 
     if (ext === '.png') {
       await sharpInstance
@@ -109,6 +110,7 @@ async function optimizeImage(filePath, sharp) {
 
     // ── 2. Generate .webp ────────────────────────────────────────────────────
     await sharp(filePath)
+      .rotate() // Also apply auto-rotation to WebP
       .webp({ quality: CONFIG.webpQuality, effort: 6 })
       .toFile(webpPath)
 

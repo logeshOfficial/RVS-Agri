@@ -155,6 +155,7 @@ async function main() {
       // ── 1. Re-compress the original in place ──────────────────────────────
       const tmpPath = srcPath + '.tmp'
       const sharpInstance = sharp(srcPath)
+        .rotate() // Auto-rotate based on EXIF orientation, then remove the EXIF tag
 
       if (ext === '.png') {
         await sharpInstance
@@ -187,6 +188,7 @@ async function main() {
 
       // ── 2. Generate .webp sibling ─────────────────────────────────────────
       await sharp(srcPath)
+        .rotate() // Also apply auto-rotation to WebP
         .webp({ quality: CONFIG.webpQuality, effort: 6 })
         .toFile(webpPath)
 

@@ -57,9 +57,9 @@ async function optimizeAndStage(filePath, sharp) {
     // Compress original
     const tmpPath = filePath + '.opt.tmp'
     if (ext === '.png') {
-      await sharp(filePath).png({ quality: 80, compressionLevel: 9 }).toFile(tmpPath)
+      await sharp(filePath).rotate().png({ quality: 80, compressionLevel: 9 }).toFile(tmpPath)
     } else {
-      await sharp(filePath).jpeg({ quality: 80, mozjpeg: true }).toFile(tmpPath)
+      await sharp(filePath).rotate().jpeg({ quality: 80, mozjpeg: true }).toFile(tmpPath)
     }
 
     const tmpStat = await stat(tmpPath)
@@ -71,7 +71,7 @@ async function optimizeAndStage(filePath, sharp) {
     }
 
     // Generate WebP
-    await sharp(filePath).webp({ quality: 82, effort: 6 }).toFile(webpPath)
+    await sharp(filePath).rotate().webp({ quality: 82, effort: 6 }).toFile(webpPath)
     console.log(\`  ✔ webp        \${webpPath}\`)
 
     // Re-stage both files
