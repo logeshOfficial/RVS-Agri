@@ -87,11 +87,14 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-5 sm:px-8 py-2 flex items-center justify-between">
           {/* Left — logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img
-              src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
-              alt="RVS AGRI Logo"
-              className="h-20 sm:h-24 w-auto object-contain gentle-animation group-hover:scale-105"
-            />
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
+                alt="RVS AGRI Logo"
+                className="h-20 sm:h-24 w-auto object-contain gentle-animation group-hover:scale-105"
+              />
+            </picture>
           </Link>
 
           {/* Centre — nav links */}

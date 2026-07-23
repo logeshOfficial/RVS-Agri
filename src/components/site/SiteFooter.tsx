@@ -9,11 +9,14 @@ export function SiteFooter() {
         {/* Brand — spans 2 cols on large screens */}
         <div className="sm:col-span-2 lg:col-span-2">
           <div className="mb-5">
-            <img
-              src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
-              alt="RVS AGRI Logo"
-              className="h-20 w-auto object-contain bg-white p-1.5 rounded-xl"
-            />
+            <picture>
+              <source srcSet={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.webp`} type="image/webp" />
+              <img
+                src={`${import.meta.env.BASE_URL}rvs-agri-logo-transparent.png`}
+                alt="RVS AGRI Logo"
+                className="h-20 w-auto object-contain bg-white p-1.5 rounded-xl"
+              />
+            </picture>
           </div>
           <p className="text-white/70 leading-relaxed text-sm max-w-sm">
             A family farm rooted in generations of care for the land — growing paddy,

@@ -14,6 +14,11 @@ function cardImageUrl(folder: string, filename: string): string {
   return `${import.meta.env.BASE_URL}home/${folder}/${filename}`
 }
 
+/** Derive the .webp sibling URL from a JPEG/PNG URL */
+function toWebpUrl(url: string): string {
+  return url.replace(/\.(jpe?g|png)$/i, '.webp')
+}
+
 const quickLinks = [
   { icon: Sprout, title: 'Agriculture', desc: 'Paddy & Coconut', to: '/produce' },
   { icon: Leaf, title: 'Horticulture', desc: 'Mango & Jackfruit', to: '/produce' },
@@ -263,12 +268,24 @@ export default function Home() {
                 className="group bg-background rounded-2xl overflow-hidden border border-border hover:shadow-xl gentle-animation flex flex-col"
               >
                 <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={cardImageUrl(p.folder, p.image)}
-                    alt={p.title}
-                    className="w-full h-full object-cover group-hover:scale-105 gentle-animation"
-                    loading="lazy"
-                  />
+                  {p.image.startsWith('http') ? (
+                    <img
+                      src={cardImageUrl(p.folder, p.image)}
+                      alt={p.title}
+                      className="w-full h-full object-cover group-hover:scale-105 gentle-animation"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <picture>
+                      <source srcSet={toWebpUrl(cardImageUrl(p.folder, p.image))} type="image/webp" />
+                      <img
+                        src={cardImageUrl(p.folder, p.image)}
+                        alt={p.title}
+                        className="w-full h-full object-cover group-hover:scale-105 gentle-animation"
+                        loading="lazy"
+                      />
+                    </picture>
+                  )}
                 </div>
                 <div className="p-5 flex flex-col flex-1">
                   <span className="text-[10px] uppercase tracking-[0.2em] text-farm-leaf-dark font-semibold">

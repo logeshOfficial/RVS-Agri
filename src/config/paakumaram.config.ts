@@ -29,23 +29,23 @@ export interface PaakumaramImage {
 
 export const paakumaramImages: PaakumaramImage[] = [
   {
-    src: 'pakku-1.jpeg',
+    src: 'areca/pakku-1.jpeg',
     alt: 'Paakumaram areca tree — ripe golden-orange betel nuts on the trunk',
   },
   {
-    src: 'pakku-2.jpeg',
+    src: 'areca/pakku-2.jpeg',
     alt: 'Paakumaram areca tree — dense clusters of orange and green nuts',
   },
   {
-    src: 'pakku-3.jpeg',
+    src: 'areca/pakku-3.jpeg',
     alt: 'Paakumaram areca tree — green areca nuts at an earlier ripening stage',
   },
   {
-    src: 'pakku-4.jpeg',
+    src: 'areca/pakku-4.jpeg',
     alt: 'Paakumaram areca tree — full tree view showing height and plantation row',
   },
   {
-    src: 'pakku.jpg',
+    src: 'areca/pakku.jpg',
     alt: 'Paakumaram areca nut — close view of harvested betel nuts',
   },
 ]
